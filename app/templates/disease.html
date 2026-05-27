@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* BACKGROUND IMAGE */
+  .bg-image {
+    background: url('../static/images/s1.jpg') no-repeat center center/cover;
+    min-height: 100vh;
+  }
+
+  /* OVERLAY (slightly lighter for better visibility) */
+  .overlay {
+    background: rgba(0, 0, 0, 0.5);
+    min-height: 100vh;
+    padding-top: 60px;
+    text-align: center;
+  }
+
+  /* 🔥 FIXED TITLE */
+  h2 {
+    font-weight: 700;
+    color: white;
+    font-size: 34px;
+    letter-spacing: 1px;
+    text-shadow: 0px 4px 15px rgba(0,0,0,0.8);
+    margin-bottom: 30px;
+  }
+
+  /* CARD */
+  .form-box {
+    width: 380px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+    color: black;
+  }
+
+  /* IMAGE PREVIEW */
+  #output-image {
+    margin-top: 15px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  /* BUTTON */
+  .btn-primary {
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    border: none;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .btn-primary:hover {
+    transform: scale(1.05);
+  }
+
+</style>
+
+<div class="bg-image">
+  <div class="overlay">
+
+    <!-- TITLE -->
+    <h2>Plant Disease Detection 🌿</h2>
+
+    <div class="form-box">
+
+      <form method="POST" enctype="multipart/form-data">
+
+        <h5><b>Upload Plant Leaf Image</b></h5>
+
+        <input type="file" name="file" class="form-control" onchange="preview_image(event)" required>
+
+        <img id="output-image" class="rounded mx-auto d-block" />
+
+        <br>
+
+        <button class="btn btn-primary btn-block" type="submit">
+          Detect 🚀
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function preview_image(event) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var output = document.getElementById('output-image');
+      output.src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+  }
+</script>
+
+{% endblock %}

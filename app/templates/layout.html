@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ title }}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel='stylesheet' type='text/css' />
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Thasadith:400,700" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 🔥 MODERN NAVBAR */
+        .navbar {
+            background: linear-gradient(90deg, #134e5e, #71b280);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            padding: 12px 30px;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-size: 18px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #00ffcc !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('crop_recommend') }}">Crop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('fertilizer_recommendation') }}">Fertilizer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('disease_prediction') }}">Disease</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    {% block body %}{% endblock %}
+
+    <!-- ✅ IMPORTANT FIX: LOAD STATE-CITY SCRIPT -->
+    <script src="{{ url_for('static', filename='scripts/cities.js') }}"></script>
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

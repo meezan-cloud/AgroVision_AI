@@ -1,0 +1,190 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<style>
+  body { margin: 0; padding: 0; }
+
+  .bg-image {
+    background: url('../static/images/s3.jpg') no-repeat center center/cover;
+    min-height: 100vh;
+  }
+
+  .overlay {
+    background: rgba(0, 0, 0, 0.65);
+    min-height: 100vh;
+    padding-top: 40px;
+  }
+
+  h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 25px;
+    font-weight: bold;
+  }
+
+  .form-box {
+    width: 400px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .form-control { border-radius: 8px; }
+
+  .btn-info {
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    border: none;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .btn-info:hover { transform: scale(1.05); }
+
+  .weather-box {
+    background: #ecf9f1;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #2c3e50;
+  }
+</style>
+
+<div class="bg-image">
+  <div class="overlay">
+
+    <h2>Smart Crop Recommendation System 🌱</h2>
+
+    <div class="form-box">
+
+      <form method="POST" action="{{ url_for('crop_prediction') }}">
+
+        <!-- SOIL INPUTS -->
+        <div class="form-group">
+          <label><b>Nitrogen</b></label>
+          <input type="number" class="form-control" name="nitrogen" required />
+        </div>
+
+        <div class="form-group">
+          <label><b>Phosphorous</b></label>
+          <input type="number" class="form-control" name="phosphorous" required />
+        </div>
+
+        <div class="form-group">
+          <label><b>Potassium</b></label>
+          <input type="number" class="form-control" name="pottasium" required />
+        </div>
+
+        <div class="form-group">
+          <label><b>pH Level</b></label>
+          <input type="number" step="0.01" class="form-control" name="ph" required />
+        </div>
+
+        <div class="form-group">
+          <label><b>Rainfall (mm)</b></label>
+          <input type="number" step="0.01" class="form-control" name="rainfall" required />
+        </div>
+
+        <!-- STATE + CITY -->
+        <div class="form-group">
+          <label><b>State</b></label>
+          <select onchange="print_city('state', this.selectedIndex);" id="sts" class="form-control" required></select>
+
+          <br />
+
+          <label><b>City</b></label>
+          <select id="state" class="form-control" name="city" required></select>
+        </div>
+
+        <!-- WEATHER DISPLAY -->
+        <div class="weather-box" id="weatherText">
+          Select city to fetch weather 🌤
+        </div>
+
+        <!-- AUTO FILL -->
+        <div class="form-group">
+          <label><b>Temperature (°C)</b></label>
+          <input id="temperature" type="number" class="form-control" name="temperature" readonly required />
+        </div>
+
+        <div class="form-group">
+          <label><b>Humidity (%)</b></label>
+          <input id="humidity" type="number" class="form-control" name="humidity" readonly required />
+        </div>
+
+        <br />
+
+        <div class="d-flex justify-content-center">
+          <button id="predictBtn" type="submit" class="btn btn-info" style="width:150px;height:50px;" disabled>
+            Select city first 🚫
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- LOAD STATES -->
+<script>
+window.onload = function () {
+  if (typeof print_state === "function") {
+    print_state("sts");
+  }
+};
+</script>
+
+<!-- AUTO WEATHER + BUTTON CONTROL -->
+<script>
+const cityDropdown = document.getElementById("state");
+const btn = document.getElementById("predictBtn");
+const weatherText = document.getElementById("weatherText");
+
+cityDropdown.addEventListener("change", function () {
+
+    let city = this.value;
+
+    btn.disabled = true;
+    btn.innerHTML = "Loading... ⏳";
+
+    weatherText.innerHTML = "Fetching weather... ⏳";
+
+    fetch("/get-weather", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ city: city })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        document.getElementById("temperature").value = data.temperature;
+        document.getElementById("humidity").value = data.humidity;
+
+        weatherText.innerHTML =
+            "🌤 " + city + ": " + data.temperature + "°C | " + data.humidity + "% humidity";
+
+        btn.disabled = false;
+        btn.innerHTML = "Predict 🚀";
+
+    })
+    .catch(error => {
+
+        weatherText.innerHTML = "Weather unavailable ⚠️";
+
+        btn.disabled = false;
+        btn.innerHTML = "Predict 🚀";
+    });
+
+});
+</script>
+
+{% endblock %}

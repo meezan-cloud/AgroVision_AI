@@ -1,0 +1,128 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* BACKGROUND IMAGE */
+  .bg-image {
+    background: url('../static/images/s.jpg') no-repeat center center/cover;
+    min-height: 100vh;
+  }
+
+  /* DARK OVERLAY */
+  .overlay {
+    background: rgba(0, 0, 0, 0.6);
+    min-height: 100vh;
+    padding-top: 40px;
+  }
+
+  h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 25px;
+    font-weight: bold;
+  }
+
+  /* FORM BOX */
+  .form-box {
+    width: 380px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .form-control {
+    border-radius: 8px;
+  }
+
+  /* BUTTON */
+  .btn-info {
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    border: none;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .btn-info:hover {
+    transform: scale(1.05);
+  }
+
+</style>
+
+<div class="bg-image">
+  <div class="overlay">
+
+    <h2>Smart Fertilizer Recommendation 🌿</h2>
+
+    <div class="form-box">
+
+      <form method="POST" action="{{ url_for('fert_recommend') }}">
+
+        <div class="form-group">
+          <label><b>Nitrogen</b></label>
+          <input type="number" class="form-control" name="nitrogen" placeholder="Enter value (e.g. 50)" required />
+        </div>
+
+        <div class="form-group">
+          <label><b>Phosphorous</b></label>
+          <input type="number" class="form-control" name="phosphorous" placeholder="Enter value (e.g. 50)" required />
+        </div>
+
+        <div class="form-group">
+          <label><b>Potassium</b></label>
+          <input type="number" class="form-control" name="pottasium" placeholder="Enter value (e.g. 50)" required />
+        </div>
+
+        <div class="form-group">
+          <label><b>Crop you want to grow</b></label>
+          <select name="cropname" class="form-control" required>
+            <option selected>Select crop</option>
+            <option>rice</option>
+            <option>maize</option>
+            <option>chickpea</option>
+            <option>kidneybeans</option>
+            <option>pigeonpeas</option>
+            <option>mothbeans</option>
+            <option>mungbean</option>
+            <option>blackgram</option>
+            <option>lentil</option>
+            <option>pomegranate</option>
+            <option>banana</option>
+            <option>mango</option>
+            <option>grapes</option>
+            <option>watermelon</option>
+            <option>muskmelon</option>
+            <option>apple</option>
+            <option>orange</option>
+            <option>papaya</option>
+            <option>coconut</option>
+            <option>cotton</option>
+            <option>jute</option>
+            <option>coffee</option>
+          </select>
+        </div>
+
+        <br>
+
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-info" style="width:150px; height:50px; border-radius:12px;">
+            Predict 🚀
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

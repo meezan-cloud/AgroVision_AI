@@ -1,0 +1,98 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<style>
+  .hero {
+    height: 100vh;
+    background: url('../static/images/farm_background.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+  }
+
+  /* STRONG DARK OVERLAY (KEY FIX) */
+  .hero::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* 🔥 important */
+    top: 0;
+    left: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  /* TITLE FIX */
+  h1 {
+    font-size: 64px;
+    font-weight: 900;
+    color: #ffffff; /* solid white */
+    text-shadow: 4px 4px 20px rgba(0,0,0,0.9); /* 🔥 glow */
+    margin-bottom: 10px;
+  }
+
+  /* SUBTITLE FIX */
+  h4 {
+    font-size: 22px;
+    color: #f1f1f1;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+  }
+
+  .features {
+    font-size: 18px;
+    line-height: 2;
+    margin-bottom: 30px;
+  }
+
+  .features span {
+    display: block;
+  }
+
+  /* BUTTON */
+  .btn-custom {
+    padding: 14px 40px;
+    font-size: 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    border: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-custom:hover {
+    transform: scale(1.1);
+  }
+
+</style>
+
+<div class="hero">
+  <div class="content">
+
+    <h1>AgroSmart AI 🌾</h1>
+
+    <h4>Smarter Farming Starts With Better Decisions</h4>
+
+    <div class="features">
+      <span>🌱 AI-powered crop recommendations</span>
+      <span>🌿 Smart fertilizer guidance</span>
+      <span>🧪 Instant plant disease detection</span>
+    </div>
+
+    <a href="{{ url_for('crop_recommend') }}" class="btn btn-success btn-custom">
+      Start Prediction 🚀
+    </a>
+
+  </div>
+</div>
+
+{% endblock %}
