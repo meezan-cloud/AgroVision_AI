@@ -1,4 +1,4 @@
-# 🌾 AgroVision AI
+# 🌾 AgroSmart AI
 ### Smart Agriculture & Crop Intelligence System
 
 AgroVision AI is an AI-powered smart agriculture platform that helps farmers make intelligent farming decisions using Machine Learning and Deep Learning technologies.
